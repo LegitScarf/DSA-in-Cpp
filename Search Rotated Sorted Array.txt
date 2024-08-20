@@ -1,0 +1,50 @@
+int getPivot(vector<int>& arr, int n) {
+    int s = 0;
+    int e = n - 1;
+    int mid;
+
+    while (s < e) {
+        mid = s + (e - s) / 2;
+
+        // Check if mid element is greater than the start element
+        if (arr[mid] >= arr[0]) {
+            s = mid + 1;
+        } else {
+            e = mid;
+        }
+    }
+
+    return s;
+}
+
+int BinarySearch(vector<int>& arr, int s, int e, int k) {
+    int start = s;
+    int end = e;
+    int mid;
+
+    while (start <= end) {
+        mid = start + (end - start) / 2;
+
+        if (k == arr[mid]) {
+            return mid;
+        }
+        if (k > arr[mid]) {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+int search(vector<int>& arr, int n, int k) {
+    int pivot = getPivot(arr, n);
+
+    // Check which part of the array to search in
+    if (k >= arr[pivot] && k <= arr[n - 1]) {
+        return BinarySearch(arr, pivot, n - 1, k);
+    } else {
+        return BinarySearch(arr, 0, pivot - 1, k);
+    }
+}
