@@ -1,0 +1,16 @@
+#include <bits/stdc++.h> 
+void insertionSort(int n, vector<int> &arr){
+    for(int i = 1; i<n ; i++){ // starting from one we consider the first element to be sorted
+        int temp = arr[i];     // in this case 0th element
+        int j = i-1;
+        for(; j>=0 ; j--){
+            if(arr[j]>temp){
+                arr[j+1] = arr[j];
+            }
+            else{
+                break;
+            }
+        }
+        arr[j+1] = temp; //because j check karega ek elemnt pehle tak
+    }
+}
