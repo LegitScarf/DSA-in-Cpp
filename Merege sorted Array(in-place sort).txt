@@ -33,7 +33,7 @@ public:
 };
 
 
-2nd approach:
+2nd approach: Backwards from the largest element. By starting from the end, we avoid overwriting elements that are yet to be merged.
 
 class Solution {
 public:
