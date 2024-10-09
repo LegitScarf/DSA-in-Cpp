@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+// Function to reverse a vector
+vector<int> reverseVector(vector<int> v) {
+    int s = 0;
+    int e = v.size() - 1;
+
+    while (s < e) {
+        swap(v[s++], v[e--]);  // Decrement `e` instead of incrementing
+    }
+    return v;
+}
+
+// Function to find the sum of two arrays representing large numbers
+vector<int> findArraySum(vector<int>& a, int n, vector<int>& b, int m) {
+    int i = n - 1;
+    int j = m - 1;
+    vector<int> ans;
+    int carry = 0;
+
+    // Sum both arrays until one of them is fully processed
+    while (i >= 0 && j >= 0) {
+        int val1 = a[i--];
+        int val2 = b[j--];
+        int sum = val1 + val2 + carry;
+        carry = sum / 10;
+        sum = sum % 10;
+        ans.push_back(sum);
+    }
+
+    // If there are remaining elements in array `a`
+    while (i >= 0) {
+        int sum = a[i--] + carry;
+        carry = sum / 10;
+        sum = sum % 10;
+        ans.push_back(sum);
+    }
+
+    // If there are remaining elements in array `b`
+    while (j >= 0) {
+        int sum = b[j--] + carry;
+        carry = sum / 10;
+        sum = sum % 10;
+        ans.push_back(sum);
+    }
+
+    // If there's still a carry left
+    while (carry != 0) {
+        int sum = carry;
+        carry = sum / 10;
+        sum = sum % 10;
+        ans.push_back(sum);
+    }
+
+    // Reverse the answer to get the correct order
+    return reverseVector(ans);
+}
