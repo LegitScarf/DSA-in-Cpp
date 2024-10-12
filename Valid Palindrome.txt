@@ -1,0 +1,47 @@
+class Solution {
+private:
+    bool isValid(char ch){
+        if((ch>='a' && ch<='z')||(ch>='A' && ch<='Z')||(ch>='0' && ch<='9')){
+            return true;
+        }
+
+        return false;
+    }
+
+    char toLower(char ch){
+        if(ch>='a' && ch<='z'){
+            return ch;
+        }
+        else{
+            int temp = ch - 'A' + 'a';
+            return temp;
+        }
+
+    }
+
+ 
+public:
+    bool isPalindrome(string s) {
+        string temp = "";
+        for(int j = 0; j<s.length(); j++){
+            if(isValid(s[j])){
+                temp.push_back(s[j]);
+            }
+            
+        }
+        
+        int start = 0;
+        int end = temp.size()-1;
+        while(start<=end){
+            if(toLower(temp[start]) != toLower(temp[end])){
+                return false;
+            }
+            else{
+                start++;
+                end--;
+            }
+        }
+        return true;
+
+    }
+};
