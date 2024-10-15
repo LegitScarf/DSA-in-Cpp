@@ -1,0 +1,16 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+string replaceSpaces(string &str) {
+    string temp = "";
+    for(int i = 0; i < str.length(); i++) {
+        if(str[i] == ' ') {
+            temp += "@40";  // Directly appending the string
+        }
+        else {
+            temp.push_back(str[i]);  // Pushing a single character
+        }
+    }
+    return temp;
+}
+
