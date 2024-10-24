@@ -1,0 +1,20 @@
+class Solution {
+public:
+    string removeDuplicates(string s) {
+        int len = s.length();
+        int i = 0;
+        while (i < len - 1) {
+            // If two consecutive characters are the same, erase them
+            if (s[i] == s[i + 1]) {
+                s.erase(i, 2);  // Erase two characters starting from index i
+                len -= 2;       // Update length after erasing
+                if (i > 0) {
+                    i--;        // Move back one position to check for more duplicates
+                }
+            } else {
+                i++;            // Move to the next character
+            }
+        }
+        return s;
+    }
+};
