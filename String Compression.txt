@@ -1,0 +1,31 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int write = 0;  // Position to write the compressed result
+        int i = 0;      // Position to read characters
+
+        while (i < chars.size()) {
+            char currentChar = chars[i];
+            int count = 0;
+
+            // Count occurrences of the current character
+            while (i < chars.size() && chars[i] == currentChar) {
+                i++;
+                count++;
+            }
+
+            // Write the character to the result
+            chars[write++] = currentChar;
+
+            // If the count is more than 1, write the count as well
+            if (count > 1) {
+                for (char c : to_string(count)) {
+                    chars[write++] = c;
+                }
+            }
+        }
+
+        // `write` now represents the new length of the array
+        return write;
+    }
+};
