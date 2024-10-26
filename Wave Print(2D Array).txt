@@ -1,0 +1,24 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+bool isEven(int col) {
+    return col % 2 == 0;
+}
+
+vector<int> wavePrint(vector<vector<int>> arr, int nRows, int mCols) {
+    vector<int> result;
+
+    for (int j = 0; j < mCols; j++) {
+        if (isEven(j)) {
+            for (int i = 0; i < nRows; i++) {
+                result.push_back(arr[i][j]);
+            }
+        } else {
+            for (int i = nRows - 1; i >= 0; i--) {
+                result.push_back(arr[i][j]);
+            }
+        }
+    }
+
+    return result;
+}
