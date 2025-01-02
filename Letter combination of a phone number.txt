@@ -1,0 +1,35 @@
+class Solution {
+private:
+    void solve(string digits, string output, int index, vector<string> &ans, vector<string> &mapping) {
+        // Base case
+        if (index >= digits.length()) {
+            ans.push_back(output);
+            return;
+        }
+
+        // Recursive case
+        int number = digits[index] - '0'; // Convert char to corresponding integer
+        string value = mapping[number];
+
+        for (int i = 0; i < value.length(); i++) {
+            output.push_back(value[i]); // Add the current letter
+            solve(digits, output, index + 1, ans, mapping); // Recursive call
+            output.pop_back(); // Backtrack
+        }
+    }
+
+public:
+    vector<string> letterCombinations(string digits) {
+        vector<string> ans;
+        if (digits.length() == 0) {
+            return ans;
+        }
+        
+        vector<string> mapping = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        string output = "";
+        int index = 0;
+        
+        solve(digits, output, index, ans, mapping);
+        return ans;
+    }
+};
