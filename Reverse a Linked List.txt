@@ -1,0 +1,16 @@
+LinkedListNode<int> *reverseLinkedList(LinkedListNode<int> *head) 
+{
+   LinkedListNode<int> *prev = NULL;  // Initialize the previous pointer as NULL
+   LinkedListNode<int> *current = head;  // Start with the head of the list
+   LinkedListNode<int> *forward = NULL;  // To keep track of the next node
+
+   // Iterate through the linked list
+   while (current != NULL) {
+       forward = current->next;  // Store the next node
+       current->next = prev;     // Reverse the pointer
+       prev = current;           // Move prev one step forward
+       current = forward;        // Move current one step forward
+   }
+
+   return prev;  // Return the new head of the reversed list
+}
