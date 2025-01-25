@@ -1,0 +1,21 @@
+class Solution {
+private:
+    void solve(ListNode* &head, ListNode* current, ListNode* prev){
+        //base case
+        if(current == NULL){
+            head = prev;
+            return;
+        }
+
+        ListNode* forward = current->next;
+        solve(head, forward, current);
+        current->next = prev;
+    }
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* prev = NULL;
+        ListNode* curr = head;
+        solve(head, curr, prev);
+        return head;
+    }
+};

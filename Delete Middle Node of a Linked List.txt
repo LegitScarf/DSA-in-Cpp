@@ -1,0 +1,28 @@
+class Solution {
+private:
+    void solve(ListNode* &head, ListNode* one, ListNode* two, ListNode* prev){
+        while(two != NULL && two->next != NULL) {
+            two = two->next->next;  
+            prev = one;           
+            one = one->next;    
+        }
+
+        prev->next = one->next;    
+        delete one;             
+    }
+
+public:
+    ListNode* deleteMiddle(ListNode* head) {
+        
+        if (head == NULL || head->next == NULL) {
+            return NULL;
+        }
+
+        ListNode* one = head; 
+        ListNode* two = head;  
+        ListNode* prev = NULL;
+        
+        solve(head, one, two, prev);
+        return head; 
+    }
+};
