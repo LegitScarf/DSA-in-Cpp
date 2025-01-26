@@ -1,0 +1,16 @@
+bool isCircular(Node* head) {
+    if (head == NULL) {
+        return true;  // An empty list is considered circular
+    }
+
+    Node* temp = head->next;
+
+    // Traverse the list to check for circularity
+    while (temp != NULL && temp != head) {
+        temp = temp->next;
+    }
+
+    // If we encounter NULL, the list is not circular
+    return temp == head;
+}
+
