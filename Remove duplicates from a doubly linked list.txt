@@ -1,0 +1,32 @@
+class Solution
+{
+public:
+    Node* removeDuplicates(Node* head)
+    {
+        if (head == NULL) {
+            return NULL;
+        }
+
+        Node* curr = head;
+        while (curr != NULL) {
+            if (curr->next != NULL && curr->data == curr->next->data) {
+                Node* to_delete = curr->next;
+                Node* next_node = to_delete->next;
+
+                // Update links
+                curr->next = next_node;
+                if (next_node != NULL) {
+                    next_node->prev = curr;
+                }
+
+                // Free memory
+                delete to_delete;
+            } 
+            else {
+                curr = curr->next;
+            }
+        }
+
+        return head;
+    }
+};
