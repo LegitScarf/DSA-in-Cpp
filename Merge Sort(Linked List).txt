@@ -1,0 +1,59 @@
+class Solution {
+private:
+    ListNode* findMid(ListNode* head) {
+        ListNode* slow = head;
+        ListNode* fast = head->next;
+
+        while (fast != NULL && fast->next != NULL) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+
+        return slow;
+    }
+
+    ListNode* merge(ListNode* left, ListNode* right) {
+        if (left == NULL) return right;
+        if (right == NULL) return left;
+
+        ListNode* dummy = new ListNode(-1);  // Dummy node to simplify merging
+        ListNode* temp = dummy;
+
+        while (left != NULL && right != NULL) {
+            if (left->val <= right->val) {
+                temp->next = left;
+                left = left->next;
+            } else {
+                temp->next = right;
+                right = right->next;
+            }
+            temp = temp->next;
+        }
+
+        // Attach the remaining part of left or right list
+        if (left != NULL) temp->next = left;
+        if (right != NULL) temp->next = right;
+
+        ListNode* result = dummy->next;
+        delete dummy;  // Free the dummy node
+        return result;
+    }
+
+public:
+    ListNode* sortList(ListNode* head) {
+        if (head == NULL || head->next == NULL) return head;
+
+        // Divide the linked list into two halves
+        ListNode* mid = findMid(head);
+        ListNode* left = head;
+        ListNode* right = mid->next;
+        mid->next = NULL;
+
+        // Sort both halves
+        left = sortList(left);   // Store sorted left half
+        right = sortList(right); // Store sorted right half
+
+        // Merge sorted halves
+        return merge(left, right);
+    }
+};
