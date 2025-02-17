@@ -1,0 +1,27 @@
+class Solution {
+private:
+    bool calc_time(vector<int>& piles, int h, int k) {
+        long long hours = 0;
+        for (int pile : piles) {
+            hours += (pile + k - 1) / k;  // Equivalent to ceil(pile / k)
+            if (hours > h) return false;  // If time exceeds h, return false early
+        }
+        return hours <= h;
+    }
+public:
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int left = 1;
+        int right = *max_element(piles.begin(), piles.end());
+        int ans = -1;
+
+        while(left<=right){
+            long long int mid = left+(right-left)/2;
+            if(calc_time(piles, h, mid)){
+                ans = mid;
+                right = mid-1;
+            }  
+            else left = mid+1;
+        }
+        return ans;
+    }
+};
