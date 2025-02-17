@@ -1,0 +1,54 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+class TwoStack {
+    int* arr;  // Dynamic array
+    int size;
+    int top1;
+    int top2;
+
+public:
+    // Initialize TwoStack.
+    TwoStack(int s) {
+        this->size = s;
+        arr = new int[size];  // Allocate memory dynamically
+        top1 = -1;  // Stack 1 starts from the left end
+        top2 = size; // Stack 2 starts from the right end
+    }
+    
+    // Push in stack 1.
+    void push1(int num) {
+        if (top1 < top2 - 1) {  // Check for available space
+            top1++;
+            arr[top1] = num;
+        }
+    }
+
+    // Push in stack 2.
+    void push2(int num) {
+        if (top1 < top2 - 1) {  // Check for available space
+            top2--;
+            arr[top2] = num;
+        }
+    }
+
+    // Pop from stack 1 and return popped element.
+    int pop1() {
+        if (top1 >= 0) { // Ensure stack 1 is not empty
+            int val = arr[top1];
+            top1--;
+            return val;
+        }
+        return -1;  // Underflow condition
+    }
+
+    // Pop from stack 2 and return popped element.
+    int pop2() {
+        if (top2 < size) { // Ensure stack 2 is not empty
+            int val = arr[top2];
+            top2++;
+            return val;
+        }
+        return -1;  // Underflow condition
+    }
+};
