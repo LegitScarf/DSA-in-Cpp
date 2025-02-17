@@ -1,0 +1,31 @@
+class Solution {
+  private:
+    long long power(long long base, int exp) {
+        long long result = 1;
+        for(int i = 0; i < exp; i++) {
+            result *= base;
+            if (result > LLONG_MAX) return -1; 
+        }
+        return result;
+    }
+
+  public:
+    int nthRoot(int n, int m) {
+        if (n == 1) return m; 
+        if (m == 0) return 0;
+        int s = 1, e = m;
+        
+        while (s <= e) {
+            int mid = s+(e-s)/2;
+            long long res = power(mid, n);
+            
+            if(res == m) return mid;
+            else if(res < m){
+                s = mid + 1;
+            }
+            else e = mid - 1;
+        }
+        
+        return -1;
+    }
+};
