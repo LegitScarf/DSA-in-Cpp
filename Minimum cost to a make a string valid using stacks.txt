@@ -1,0 +1,35 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int findMinimumCost(string str) {
+    if(str.length() % 2 == 1) {
+        return -1;
+    }
+
+    stack<char> s;
+    for (char i : str) {
+        if (i == '{') {
+            s.push(i);
+        } else {
+            if (!s.empty() && s.top() == '{') {
+                s.pop(); 
+            } else {
+                s.push(i); 
+            }
+        }
+    }
+
+    int a = 0; 
+    int b = 0; 
+    while (!s.empty()) {
+        if (s.top() == '{') {
+            a++;
+        } else {
+            b++;
+        }
+        s.pop(); 
+    }
+
+    int ans = (a + 1) / 2 + (b + 1) / 2;
+    return ans;
+}
