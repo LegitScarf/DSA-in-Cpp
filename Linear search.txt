@@ -1,0 +1,9 @@
+bool linearSearch(int arr[], int target){
+    for(int i:arr){
+        if(i == target){
+            return true;
+        }
+    }
+    return false;
+    
+}
