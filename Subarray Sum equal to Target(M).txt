@@ -1,0 +1,28 @@
+#include <unordered_map>
+#include <vector>
+
+class Solution {
+public:
+    int subarraySum(std::vector<int>& nums, int k) {
+        std::unordered_map<int, int> prefix_count; // Stores prefix sum frequencies
+        int prefix_sum = 0;
+        int count = 0;
+
+        // Initialize the map with prefix_sum 0 occurring once
+        prefix_count[0] = 1;
+
+        for (int num : nums) {
+            prefix_sum += num;
+
+            // Check if (prefix_sum - k) exists in the map
+            if (prefix_count.find(prefix_sum - k) != prefix_count.end()) {
+                count += prefix_count[prefix_sum - k];
+            }
+
+            // Store prefix_sum occurrence in the map
+            prefix_count[prefix_sum]++;
+        }
+
+        return count;
+    }
+};
