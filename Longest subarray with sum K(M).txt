@@ -1,0 +1,28 @@
+#include <algorithm>
+class Solution {
+  public:
+    int longestSubarray(vector<int>& arr, int k) {
+        unordered_map<int, int> m;
+        int prefixSum = 0, count = 0;
+        int max_size = 0;
+
+
+        m[0] = -1;
+
+        for(int j=0; j<arr.size(); j++) {
+            prefixSum += arr[j];
+
+            if(m.find(prefixSum - k) != m.end()) {
+                int i = m[prefixSum - k];
+                max_size = max(max_size, j - i);
+            }
+
+            //m[prefixSum]++;
+            if(m.find(prefixSum) == m.end()) {
+                m[prefixSum] = j;
+            }
+        }
+
+        return max_size;
+    }
+};
