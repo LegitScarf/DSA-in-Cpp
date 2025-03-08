@@ -1,0 +1,24 @@
+#include <unordered_map>
+#include <vector>
+
+class Solution {
+public:
+    int subarraySum(std::vector<int>& nums, int k) {
+        std::unordered_map<int, int> m;
+        int prefixSum = 0, count = 0;
+
+        m[0] = 1;
+
+        for (int num : nums) {
+            prefixSum += num;
+
+            if (m.find(prefixSum - k) != m.end()) {
+                count += m[prefixSum - k];
+            }
+
+            m[prefixSum]++;
+        }
+
+        return count;
+    }
+};
