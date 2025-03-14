@@ -1,0 +1,34 @@
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        //Better approach
+        /*int n = nums.size();
+        unordered_map<int,int> m;
+
+        for(int i=0; i<n; i++){
+            if(m.find(nums[i]) != m.end()){
+                return nums[i];
+            }
+
+            if(m.find(nums[i]) == m.end()){
+                m[nums[i]] = 1;
+            }
+        }
+        return 0;*/
+
+        int fast = 0, slow = 0;
+
+        do{
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while(slow != fast);
+
+        slow = 0;
+        while(slow != fast){
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return slow;
+    }
+};
