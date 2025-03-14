@@ -1,0 +1,15 @@
+#include<algorithm>
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int n = nums.size();
+        int new_size = 0;
+
+        sort(nums.begin(), nums.end());
+        new_size = n - k;
+
+        return nums[new_size]; 
+
+        
+    }
+};};
