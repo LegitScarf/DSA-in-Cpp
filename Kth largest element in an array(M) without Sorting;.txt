@@ -1,0 +1,24 @@
+#include <vector>
+#include <climits>
+using namespace std;
+
+class Solution {
+public:
+    int findKthLargest(vector<int>& nums, int k) {
+        int kthLargest = INT_MIN;
+
+        for(int i=0; i<k; i++) { 
+            int maxVal = INT_MIN, maxIndex = -1;
+
+            for(int j=0; j<nums.size(); j++) {
+                if(nums[j] > maxVal) {
+                    maxVal = nums[j];
+                    maxIndex = j;
+                }
+            }
+            nums[maxIndex] = INT_MIN;  
+            kthLargest = maxVal;
+        }
+        return kthLargest;
+    }
+};
