@@ -1,0 +1,57 @@
+#include <stack>
+#include <limits.h>
+
+class SpecialStack {
+    stack<int> s;
+    int mini;
+
+public:
+    SpecialStack() {
+        mini = INT_MAX;
+    }
+
+    void push(int data) {
+        if(s.empty()) {
+            s.push(data);
+            mini = data;
+        } 
+        else if(data <= mini) {
+            int val = 2 * data - mini;
+            s.push(val);
+            mini = data;
+        } 
+        else {
+            s.push(data);
+        }
+    }
+
+    void pop() {
+        if(s.empty()) return;
+
+        int curr = s.top();
+        s.pop();
+
+        if(curr < mini) {  
+            mini = 2 * mini - curr; 
+        }
+
+        if(s.empty()) {
+            mini = INT_MAX;  
+        }
+    }
+
+    int top() {
+        if(s.empty()) return -1;
+
+        int curr = s.top();
+        if(curr < mini) {
+            return mini;  
+        }
+        return curr;
+    }
+
+    int getMin() {
+        if(s.empty()) return -1;
+        return mini;
+    }
+};
