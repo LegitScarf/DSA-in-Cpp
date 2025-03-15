@@ -1,0 +1,41 @@
+#include <algorithm>
+class Solution {
+public:
+    int firstMissingPositive(vector<int>& nums) {
+        int n = nums.size();
+        int missing = -1;
+        bool inRange = 0;
+        bool onePresent = 0;
+        int largest_element = *max_element(nums.begin(), nums.end());
+        unordered_map<int,int> m;
+
+        // Find the smallest element
+        int mini = INT_MAX;
+        m[0] = 1;
+        for(int num:nums){
+            m[num] = 1;
+            if(num != 0){
+                mini = min(mini, num);
+            }
+            if(num == 1) onePresent = 1;
+        }
+
+        //loop through 1 till largest element kyunki 1 hi smallest missing +ve hai
+        for(int i=1; i<=largest_element; i++){
+            if(m.find(i) == m.end()){
+                missing = i;
+                inRange = 1;
+                return missing;
+            }
+        }
+
+        //Return the first missing postitve
+
+        if(inRange == 0){
+            if(onePresent) return largest_element+1;
+
+            else return 1;
+        } 
+        return 1;
+    }
+};
