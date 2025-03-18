@@ -1,0 +1,31 @@
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> ans;
+        int size_1 = s.size();
+        int size_2 = p.size();
+        unordered_map<char, int> p_hash, hash;
+
+        for(char chars:p){
+            p_hash[chars]++;
+        }
+
+        for(int i=0; i<size_2; i++){
+            hash[s[i]]++;
+        }
+
+        if(p_hash == hash) ans.push_back(0);
+
+        for(int j=size_2; j<size_1; j++){
+            hash[s[j]]++;
+            hash[s[j - size_2]]--;
+
+            if(hash[s[j - size_2]] == 0){
+                hash.erase(s[j - size_2]);
+            }
+
+            if(hash == p_hash) ans.push_back(j - size_2 + 1);
+        }
+        return ans;
+    }
+};
