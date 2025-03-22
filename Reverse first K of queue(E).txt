@@ -1,0 +1,26 @@
+#include <algorithm>
+class Solution
+{
+    public:
+    
+    // Function to reverse first k elements of a queue.
+    queue<int> modifyQueue(queue<int> q, int k) {
+        int n = q.size();
+        vector<int> arr;
+        queue<int> naya;
+        
+        for(int i=0; i<n; i++){
+            int element = q.front();
+            q.pop();
+            arr.push_back(element);
+        }
+        
+        reverse(arr.begin(), arr.begin()+k);
+        
+        for(int i=0; i<arr.size(); i++){
+            int element = arr[i];
+            naya.push(element);
+        }
+        return naya;
+    }
+};
