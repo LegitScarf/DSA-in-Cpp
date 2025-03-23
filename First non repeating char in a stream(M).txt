@@ -1,0 +1,26 @@
+class Solution {
+  public:
+    string FirstNonRepeating(string &s) {
+        int n = s.size();
+        unordered_map<char, int>m;
+        queue<int>q;
+        string ans = "";
+        
+        for(int i=0; i<n; i++){
+            char c = s[i];
+            m[c]++;
+            q.push(c);
+            
+            while(!q.empty()){
+                if(m[q.front()] > 1) q.pop();
+                
+                else{
+                    ans.push_back(q.front());
+                    break;
+                } 
+            }
+            if(q.empty()) ans.push_back('#');
+        }
+        return ans;
+    }
+};
