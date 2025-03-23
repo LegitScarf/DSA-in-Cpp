@@ -1,0 +1,69 @@
+class Solution {
+private:
+    void insertAtTail(ListNode* &tail, int d){
+        ListNode* temp = new ListNode(d);
+        tail->next = temp;
+        tail = temp;
+    }
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* curr1 = l1;
+        ListNode* curr2 = l2;
+        int carry = 0;
+        vector<int> ans;
+
+        while(curr1 != NULL && curr2 != NULL){
+            int element1 = curr1->val;
+            int element2 = curr2->val;
+
+            int sum = carry + element1 + element2;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ans.push_back(digit);
+
+            curr1 = curr1->next;
+            curr2 = curr2->next;
+        }
+        while(curr1 != NULL){
+            int element1 = curr1->val;
+
+            int sum = carry + element1;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ans.push_back(digit);
+            curr1 = curr1->next;
+        }
+
+        while(curr2 != NULL){
+            int element2 = curr2->val;
+
+            int sum = carry + element2;
+            int digit = sum % 10;
+            carry = sum / 10;
+
+            ans.push_back(digit);
+            curr2 = curr2->next;
+        }
+        if(curr1 == NULL && curr2 == NULL && carry == 1){
+            ans.push_back(1);
+        }
+
+        ListNode* newHead = NULL;
+        ListNode* newTail = NULL;
+
+        for(int i=0; i<ans.size(); i++){
+            if(i == 0){
+                ListNode* newNode = new ListNode(ans[i]);
+                newHead = newNode;
+                newTail = newNode;
+            }
+            else{
+                insertAtTail(newTail, ans[i]);
+            }
+        }
+
+        return newHead;
+    }
+};
