@@ -1,0 +1,35 @@
+#include <algorithm>
+#include <vector>
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+
+        ListNode* temp = head;
+        vector<int> arr;
+
+        while(temp != NULL){
+            arr.push_back(temp->val);
+            temp = temp->next; 
+        }
+        if(arr.size() == 0) return head;
+        if(k > arr. size()) k = k % arr.size();
+
+
+        int n = arr.size();
+        reverse(arr.begin(), arr.end());
+        reverse(arr.begin(), arr.begin() + k);
+        reverse(arr.begin() + k, arr.end());
+        
+        ListNode* dummyNode = new ListNode(0);
+        head = dummyNode;
+        temp = head;
+
+        for(int i=0; i<n; i++){
+            int element = arr[i];
+            temp->next = new ListNode(element);
+            temp = temp->next;
+        }
+
+        return head->next;
+    }
+};
