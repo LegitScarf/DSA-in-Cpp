@@ -1,0 +1,74 @@
+class LRUCache {
+public:
+
+    class Node{
+        public:
+        Node* next;
+        Node* prev;
+        int key,val;
+
+        Node(int k, int v){
+            key = k;
+            val = v;
+            prev = next = NULL;
+        }
+    };
+
+    Node* head = new Node(-1,-1);
+    Node* tail = new Node(-1,-1);
+    unordered_map<int, Node*> m;
+    int limit;
+
+    void addNode(Node* newNode){
+        Node* newNext = head->next;
+        head->next = newNode;
+        newNode->next = newNext;
+        newNext->prev = newNode;
+        newNode->prev = head;
+    }
+
+    void delNode(Node* ansNode){
+        ansNode->prev->next = ansNode->next;
+        ansNode->next->prev = ansNode->prev;
+    }
+    
+    LRUCache(int capacity) {
+        limit = capacity;
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    int get(int key) {
+        if(m.find(key) == m.end()) return -1;
+
+        Node* ansNode = m[key];
+        int ans = ansNode->val;
+
+        Node* newNode = new Node(key,ans);
+        m.erase(key);
+        delNode(ansNode);
+
+        addNode(newNode);
+        m[key] = newNode;
+
+        return ans;
+
+    }
+    
+    void put(int key, int value) {
+        //Similar key
+        if(m.find(key) != m.end()){
+            Node* newNode = new Node(key, value);
+            delNode(m[key]);
+            m.erase(key);
+        }
+        // Limit reached
+        if(m.size() == limit){
+            m.erase(tail->prev->key);
+            delNode(tail->prev);
+        }
+        Node* newNode = new Node(key, value);
+        m[key] = newNode;
+        addNode(newNode);
+    }
+};
