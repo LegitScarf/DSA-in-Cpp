@@ -1,0 +1,34 @@
+class Solution {
+private:
+    void solve(TreeNode* root, vector<int> &ans){
+        if(!root) return;
+
+        ans.push_back(root->val);
+        if(root->left) solve(root->left, ans);
+        if(root->right) solve(root->right, ans);
+    }
+
+    TreeNode* to_linkedList(TreeNode* root,vector<int> ans){
+        TreeNode* curr = root;
+        int index = 0;
+        
+        curr->val = ans[index++];
+        curr->left = NULL;
+        
+        while(index < ans.size()){
+            curr->right =new TreeNode(ans[index++]);
+            curr->left = NULL;
+            curr = curr->right;
+        }
+        curr = root;
+        return curr;
+    }
+public:
+    void flatten(TreeNode* root) {
+        if(!root) return;
+        
+        vector<int> ans;
+        solve(root, ans);
+        TreeNode* ans_head = to_linkedList(root, ans);
+    }
+};
