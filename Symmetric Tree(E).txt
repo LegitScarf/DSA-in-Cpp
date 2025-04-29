@@ -1,0 +1,37 @@
+class Solution {
+private:
+    void solve_left(TreeNode* root, vector<int> &arr) {
+        if (root == nullptr) {
+            arr.push_back(INT_MIN);
+            return;
+        }
+        
+        arr.push_back(root->val);
+        solve_left(root->left, arr);
+        solve_left(root->right, arr);
+    }
+
+    void solve_right(TreeNode* root, vector<int> &arr) {
+        if (root == nullptr) {
+            arr.push_back(INT_MIN);
+            return;
+        }
+
+        arr.push_back(root->val);
+        solve_right(root->right, arr);
+        solve_right(root->left, arr);
+    }
+
+public:
+    bool isSymmetric(TreeNode* root) {
+        if (!root) return true;
+
+        vector<int> leftArr;
+        solve_left(root->left, leftArr);
+
+        vector<int> rightArr;
+        solve_right(root->right, rightArr);
+
+        return leftArr == rightArr;
+    }
+};;
