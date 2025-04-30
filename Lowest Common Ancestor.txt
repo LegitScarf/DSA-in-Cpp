@@ -1,0 +1,51 @@
+class Solution {
+private:
+    bool solve(TreeNode* root, TreeNode* target, vector<int>& arr) {
+        if(root == nullptr) return false;
+
+        arr.push_back(root->val);
+
+        if(root == target) return true;
+
+        if(solve(root->left, target, arr))  return true;
+
+        if(solve(root->right, target, arr)) return true;
+
+        arr.pop_back();
+        return false;
+    }
+
+    TreeNode* createLL(const vector<int>& arr) {
+        TreeNode* dummyNode = new TreeNode(-1);
+        TreeNode* curr = dummyNode;
+
+        for(int val : arr) {
+            curr->right = new TreeNode(val);
+            curr = curr->right;
+        }
+
+        return dummyNode->right;
+    }
+
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        vector<int> p_node, q_node;
+
+        solve(root, p, p_node);
+        solve(root, q, q_node);
+
+        TreeNode* curr1 = createLL(p_node);
+        TreeNode* curr2 = createLL(q_node);
+        TreeNode* prev = nullptr;
+
+        while (curr1 != nullptr && curr2 != nullptr) {
+            if(curr1->val != curr2->val) break;
+
+            prev = curr1;
+            curr1 = curr1->right;
+            curr2 = curr2->right;
+        }
+
+        return prev;
+    }
+};
