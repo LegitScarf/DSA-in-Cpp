@@ -1,0 +1,26 @@
+class Solution {
+private: 
+    int cameraCount = 0;
+
+    int dfs(TreeNode* root){
+        if(root == nullptr) return 2;
+
+        int left = dfs(root->left);
+        int right = dfs(root->right);
+
+        if(left == 0 || right == 0){
+            cameraCount++;
+            return 1;
+        }
+
+        if(left == 1 || right == 1) return 2;
+        //if(left == 2 || right == 2) return 0;
+
+        return 0;
+    }
+public:
+    int minCameraCover(TreeNode* root) {
+        if(dfs(root) == 0) cameraCount++;
+        return cameraCount;
+    }
+};
