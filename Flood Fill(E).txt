@@ -1,0 +1,44 @@
+#include <vector>
+#include <queue>
+#include <cassert>
+using namespace std;
+
+class Solution {
+public:
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        int n = image.size();
+        assert(n > 0); // Ensure non-empty image
+        int m = image[0].size();
+
+        // Check all rows have equal columns
+        for(const auto& row : image) {
+            assert(row.size() == m);
+        }
+
+        int originalColor = image[sr][sc];
+        if(originalColor == color) return image;
+
+        queue<pair<int, int>> q;
+        q.push({sr, sc});
+        image[sr][sc] = color;
+
+        int dx[] = {-1, 1, 0, 0};
+        int dy[] = {0, 0, -1, 1};
+
+        while(!q.empty()){
+            auto [x, y] = q.front();
+            q.pop();
+
+            for(int i=0; i<4; i++){
+                int newX = x + dx[i];
+                int newY = y + dy[i];
+
+                if(newX >= 0 && newX < n && newY >= 0 && newY < m && image[newX][newY] == originalColor){
+                    image[newX][newY] = color;
+                    q.push({newX, newY});
+                }
+            }
+        }
+        return image;
+    }
+};
