@@ -1,0 +1,38 @@
+class Solution {
+public:
+    unordered_map<int, stack<int>> graph;
+    vector<vector<int>> result;
+
+    void dfs(int node) {
+        auto& neighbors = graph[node];
+        while(!neighbors.empty()) {
+            int next = neighbors.top();
+            neighbors.pop();
+            dfs(next);
+            result.push_back({node, next});
+        }
+    }
+
+    vector<vector<int>> validArrangement(vector<vector<int>>& pairs) {
+        unordered_map<int, int> outDeg, inDeg;
+
+        for(auto& pair : pairs) {
+            int u = pair[0], v = pair[1];
+            graph[u].push(v);
+            outDeg[u]++;
+            inDeg[v]++;
+        }
+
+        int start = pairs[0][0];
+        for(auto& [node, _] : graph) {
+            if(outDeg[node] > inDeg[node]) {
+                start = node;
+                break;
+            }
+        }
+
+        dfs(start);
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
