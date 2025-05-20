@@ -1,0 +1,25 @@
+class Solution{
+public:
+    vector<string> itenary;
+    unordered_map<string, priority_queue<string, vector<string>, greater<string>>> graph;
+    
+    void dfs(string airport){
+        auto &destinations = graph[airport];
+        while(!destinations.empty()){
+            string next = destinations.top();
+            destinations.pop();
+            dfs(next);
+        }
+        itenary.push_back(airport);
+    }
+
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        for(auto &ticket : tickets){
+            graph[ticket[0]].push(ticket[1]);
+        }
+
+        dfs("JFK");
+        reverse(itenary.begin(), itenary.end());
+        return itenary;
+    }
+};
