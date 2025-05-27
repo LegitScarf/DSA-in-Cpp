@@ -1,0 +1,33 @@
+class Solution {
+set<vector<int>>s;
+private:
+    void solve(vector<int>& arr, int idx, vector<int>& comb, vector<vector<int>>& ans, int target){
+        if(idx == arr.size() || target < 0) return;
+        if(target == 0){
+            if(s.find(comb) == s.end()){
+                ans.push_back(comb);
+                s.insert(comb);
+            }
+            return;
+        }
+        
+        comb.push_back(arr[idx]);
+        //single inclusion
+        solve(arr, idx+1, comb, ans, target-arr[idx]);
+        //multiple inclusion
+        solve(arr, idx, comb, ans, target-arr[idx]);
+        //exlusion
+        comb.pop_back();
+        solve(arr, idx+1, comb, ans, target);
+        
+    }
+public:
+    vector<vector<int>> combinationSum(vector<int>& arr, int target) {
+        vector<vector<int>> ans;
+        vector<int> comb;
+        int idx = 0;
+
+        solve(arr, idx, comb, ans, target);
+        return ans;
+    }
+};
