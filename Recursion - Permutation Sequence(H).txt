@@ -1,0 +1,30 @@
+#include <string>
+#include <algorithm>
+class Solution {
+private:
+    void solve(string& s,vector<string>& ans, int index, int n, int k){
+        if(index == n){
+            ans.push_back(s);
+            return;
+        }
+
+        for(int i=index; i<n; i++){
+           swap(s[i], s[index]);
+           solve(s,ans,index+1,n,k);
+           swap(s[i], s[index]);
+        }
+
+    }
+public:
+    string getPermutation(int n, int k) {
+        string s = "";
+        for(int i=1; i<=n; i++){
+            char ch = static_cast<char>(i + '0');
+            s.push_back(ch);
+        }
+        vector<string> ans;
+        solve(s,ans,0,n,k);
+        sort(ans.begin(), ans.end());
+        return ans[k-1];
+    }
+};
