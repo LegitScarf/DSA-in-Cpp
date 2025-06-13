@@ -1,0 +1,35 @@
+class Solution {
+private:
+    int robHouses(vector<int>& nums, int start, int end){
+        // int len = end-start+1;
+        // if(len == 0) return 0;
+        // if(len == 1) return nums[start];
+        //if (len == 2) return max(nums[start], nums[start+1]);
+
+        // vector<int> dp(len+1, 0);
+        // dp[0] = 0;
+        // dp[1] = nums[start];
+        int prev2 = 0;
+        int prev1 = 0;
+
+        for(int i=start; i<=end; i++){
+            //dp[i] = max(dp[i-1], nums[start+i-1]+dp[i-2]);
+            int sum = max(prev1, nums[i]+prev2);
+            prev2 = prev1;
+            prev1 = sum;
+        }
+        //return dp[len];
+        return prev1;
+    }
+public:
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        if(n == 0) return 0;
+        if(n == 1) return nums[0];
+
+        int sum1 = robHouses(nums,0,n-2);
+        int sum2 = robHouses(nums,1,n-1);
+
+        return max(sum1, sum2);
+    }
+};
