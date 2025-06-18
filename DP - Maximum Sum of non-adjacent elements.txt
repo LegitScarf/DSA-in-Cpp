@@ -1,0 +1,20 @@
+#include <bits/stdc++.h> 
+
+int solve(vector<int> &nums, int n, int index, vector<int> &dp){
+    if(index >= n){
+        return 0;
+    }
+    if(dp[index] != -1) return dp[index];
+
+    int inc = solve(nums,n,index+2,dp) + nums[index];
+    int exc = solve(nums,n,index+1,dp) + 0;
+
+    dp[index] = max(inc, exc);
+    return dp[index];
+}
+int maximumNonAdjacentSum(vector<int> &nums){
+    int n = nums.size();
+    vector<int> dp(n,-1);
+    int ans = solve(nums,n,0,dp);
+    return ans;
+}
