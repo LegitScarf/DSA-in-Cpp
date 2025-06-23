@@ -1,0 +1,19 @@
+#include <bits/stdc++.h> 
+int solve(vector<int>& nums, int tar, vector<int>& dp){
+    if(tar == 0) return 1;
+    if(tar < 0) return 0;
+
+    if(dp[tar] != -1) return dp[tar];
+    dp[tar] = 0;
+
+    for(int i=0; i<nums.size(); i++){
+        dp[tar] += solve(nums, tar-nums[i], dp);
+    }
+    return dp[tar];
+}
+int findWays(vector<int> &num, int tar)
+{
+    //int n = nums.size();
+    vector<int> dp(tar+1,-1);
+    return solve(num, tar, dp);
+}
