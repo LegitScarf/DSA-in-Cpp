@@ -1,0 +1,21 @@
+class Solution {
+  private:
+    int solve(vector<int>& coins, int sum, int index, vector<vector<int>>& dp){
+       if(sum == 0) return 1;
+       if(sum < 0 || index == coins.size()) return 0;
+    
+       if(dp[index][sum] != -1) return dp[index][sum];
+
+       int count = 0;
+       for(int i=index; i<coins.size(); i++){
+           count += solve(coins, sum - coins[i], i, dp);
+       }
+       return dp[index][sum] = count;
+    }
+
+  public:
+    int count(vector<int>& coins, int sum) {
+        vector<vector<int>> dp(coins.size(), vector<int>(sum +1,-1));
+        return solve(coins, sum, 0, dp);
+    }
+};
