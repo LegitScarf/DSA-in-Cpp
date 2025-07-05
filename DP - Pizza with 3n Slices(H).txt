@@ -1,0 +1,33 @@
+class Solution {
+private:
+    int solve(int index, vector<int>& slices, int n){
+        if(n == 0 || index >= slices.size()) return 0;
+
+        int take = slices[index] + solve(index+2,slices,n-1);
+        int notTake = 0 + solve(index+1,slices,n);
+        return max(take, notTake);
+    }
+    int solveMem(int index, vector<int>& slices, int n, vector<vector<int>>& dp){
+        if(n == 0 || index >= slices.size()) return 0;
+        
+        if(dp[index][n] != -1) return dp[index][n];
+        int take = slices[index] + solveMem(index+2,slices,n-1,dp);
+        int notTake = 0 + solveMem(index+1,slices,n, dp);
+        return dp[index][n] = max(take, notTake);
+    }
+public:
+    int maxSizeSlices(vector<int>& slices) {
+        int k = slices.size();
+        int n = k/3;
+
+        vector<int>caseSlice1(slices.begin(), slices.end()-1);
+        vector<vector<int>> dp1(k, vector<int>(n+1, -1));
+        int case1 = solveMem(0, caseSlice1, n, dp1);
+
+        vector<int>caseSlice2(slices.begin()+1, slices.end());
+        vector<vector<int>>dp2(k, vector<int>(n+1, -1));
+        int case2 = solveMem(0, caseSlice2, n, dp2);
+
+        return max(case1, case2);
+    }
+};
