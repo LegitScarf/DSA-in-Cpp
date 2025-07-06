@@ -1,33 +1,27 @@
 class Solution {
-set<vector<int>>s;
-private:
-    void solve(vector<int>& arr, int idx, vector<int>& comb, vector<vector<int>>& ans, int target){
-        if(idx == arr.size() || target < 0) return;
-        if(target == 0){
-            if(s.find(comb) == s.end()){
-                ans.push_back(comb);
-                s.insert(comb);
-            }
-            return;
+  private:
+    set<vector<int>>check;
+    
+    void solve(vector<int> &arr,int i, int target, vector<int>& result, 
+    vector<vector<int>>& ans){
+        if(target == 0 && check.find(result) == check.end()){
+          check.insert(result);
+          ans.push_back(result);
+          return;
         }
+        if(target < 0 || i>=arr.size()) return;
         
-        comb.push_back(arr[idx]);
-        //single inclusion
-        solve(arr, idx+1, comb, ans, target-arr[idx]);
-        //multiple inclusion
-        solve(arr, idx, comb, ans, target-arr[idx]);
-        //exlusion
-        comb.pop_back();
-        solve(arr, idx+1, comb, ans, target);
+        result.push_back(arr[i]);
+        solve(arr,i, target-arr[i], result, ans);
+        result.pop_back();
         
+        solve(arr,i+1,target,result,ans);
     }
-public:
-    vector<vector<int>> combinationSum(vector<int>& arr, int target) {
+  public:
+    vector<vector<int>> combinationSum(vector<int> &arr, int target) {
+        vector<int> result;
         vector<vector<int>> ans;
-        vector<int> comb;
-        int idx = 0;
-
-        solve(arr, idx, comb, ans, target);
+        solve(arr,0, target, result, ans);
         return ans;
     }
 };
