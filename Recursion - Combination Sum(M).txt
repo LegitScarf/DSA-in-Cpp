@@ -17,11 +17,28 @@ class Solution {
         
         solve(arr,i+1,target,result,ans);
     }
+    
+    void solve2(vector<int>& arr, int start, int target, vector<int>& result, 
+    vector<vector<int>>& ans) {
+        if(target == 0) {
+          ans.push_back(result);
+          return;
+        }
+        if (target < 0) return;
+
+        for (int i=start; i < arr.size(); i++) {
+            result.push_back(arr[i]);
+            solve(arr, i, target - arr[i], result, ans); // `i` for reuse allowed; use `i+1` if reuse not allowed
+            result.pop_back();
+        }
+    }
+
   public:
     vector<vector<int>> combinationSum(vector<int> &arr, int target) {
         vector<int> result;
         vector<vector<int>> ans;
-        solve(arr,0, target, result, ans);
+        //solve(arr,0, target, result, ans);
+        solve2(arr,0, target, result, ans);
         return ans;
     }
 };
