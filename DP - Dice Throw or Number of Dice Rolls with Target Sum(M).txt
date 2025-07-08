@@ -1,0 +1,36 @@
+class Solution {
+  private:
+    int solve(int dice, int faces, int target){
+        if(target < 0) return 0;
+        if(dice == 0 && target != 0) return 0;
+        if(target == 0 && dice != 0) return 0;
+        if(dice == 0 && target == 0) return 1;
+        
+        int sum = 0;
+        for(int i=1; i<=faces; i++){
+            sum = sum + solve(dice-1, faces, target-i);
+        }
+        return sum;
+    }
+    int solveMem(int dice, int faces, int target, vector<vector<int>>& dp){
+        if(target < 0) return 0;
+        if(dice == 0 && target != 0) return 0;
+        if(target == 0 && dice != 0) return 0;
+        if(dice == 0 && target == 0) return 1;
+        
+        if(dp[dice][target] != -1) return dp[dice][target];
+        
+        int sum = 0;
+        for(int i=1; i<=faces; i++){
+            sum = sum + solveMem(dice-1, faces, target-i, dp);
+        }
+        dp[dice][target] = sum;
+        return dp[dice][target];
+    }
+  public:
+    int noOfWays(int m, int n, int x) {
+        vector<vector<int>> dp(n+1, vector<int>(x+1, -1));
+        return solveMem(n,m,x,dp);
+        
+    }
+};
