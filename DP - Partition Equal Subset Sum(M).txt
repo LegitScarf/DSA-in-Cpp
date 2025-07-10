@@ -1,0 +1,41 @@
+class Solution {
+  private:
+    bool solve(int index, int n, vector<int>& arr, int target){
+        if(index > n) return 0;
+        if(target < 0) return 0;
+        if(target == 0) return 1;
+        
+        int include = solve(index+1,n,arr,target-arr[index]);
+        int exclude = solve(index+1,n,arr,target);
+        
+        return include or exclude ;
+    }
+    bool solveMem(int index, int n, vector<int>& arr, int target,
+    vector<vector<int>>& dp){
+        if(index > n) return 0;
+        if(target < 0) return 0;
+        if(target == 0) return 1;
+        
+        if(dp[index][target] != -1) return dp[index][target];
+        
+        int include = solveMem(index+1,n,arr,target-arr[index],dp);
+        int exclude = solveMem(index+1,n,arr,target,dp);
+        
+        dp[index][target] = include or exclude;
+        return dp[index][target];
+    }
+    
+  public:
+    bool equalPartition(vector<int>& arr) {
+        int n = arr.size();
+        int total = 0;
+        for(int i=0; i<n; i++){
+            total += arr[i];
+        }
+        if(total & 1) return false;
+        
+        int target = total/2;
+        vector<vector<int>>dp(n+1, vector<int>(target+1, -1));
+        return solveMem(0,n,arr,target,dp);
+    }
+};
