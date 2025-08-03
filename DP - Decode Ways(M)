@@ -1,0 +1,42 @@
+class Solution {
+private:
+   int solve(const string& s,int i){
+        int n = s.size();
+        if(i == n) return 1;
+        if(s[i] == '0') return 0;
+
+        int ways = 0;
+        ways += solve(s,i+1);
+
+        if(i+1 < n){
+            int twoDigit = (s[i]-'0')*10 + (s[i+1]-'0');
+            if(twoDigit>=10 && twoDigit<=26){
+                ways += solve(s,i+2);
+            }
+        }
+        return ways;
+   }
+   int solveMem(const string& s,int i,vector<int>& dp){
+        int n = s.size();
+        if(i == n) return 1;
+        if(s[i] == '0') return 0;
+
+        if(dp[i] != 0) return dp[i];
+        int ways = 0;
+        ways += solveMem(s,i+1,dp);
+
+        if(i+1 < n){
+            int twoDigit = (s[i]-'0')*10 + (s[i+1]-'0');
+            if(twoDigit>=10 && twoDigit<=26){
+                ways += solveMem(s,i+2,dp);
+            }
+        }
+        return dp[i] = ways;
+   }
+public:
+    int numDecodings(string s) {
+        if(s.size() == 0) return 0;
+        vector<int> dp(s.size()+1,0);
+        return solveMem(s,0,dp);
+    }
+};
