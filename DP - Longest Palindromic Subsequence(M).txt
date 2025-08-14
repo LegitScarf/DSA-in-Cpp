@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int solveMem(string& a, string& b, int i, int j, vector<vector<int>>& dp){
+        if(i == a.size() || j == b.size()) return 0;
+        
+        if(dp[i][j] != -1) return dp[i][j];
+        int ans = 0;
+        if(a[i] == b[j]){
+            ans = 1+solveMem(a,b,i+1,j+1,dp);
+        }
+        else{
+            ans = max(solveMem(a,b,i+1,j,dp),solveMem(a,b,i,j+1,dp));
+        }
+        return dp[i][j] = ans;
+    }
+    int longestPalindromeSubseq(string s) {
+        string s_rev = s;
+        reverse(s_rev.begin(), s_rev.end());
+        int a = s.size();
+        int b = s_rev.size();
+        vector<vector<int>>dp(a+1,vector<int>(b+1,-1));
+        return solveMem(s,s_rev,0,0,dp);
+    }
+};
