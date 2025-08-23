@@ -1,0 +1,43 @@
+// class implemented
+/*
+struct Item{
+    int value;
+    int weight;
+};
+*/
+
+class Solution {
+public:
+    static bool cmp(tuple<double,int,int> a, tuple<double,int,int> b) {
+        return get<0>(a) > get<0>(b); // compare by ratio
+    }
+    
+    double fractionalKnapsack(vector<int>& val, vector<int>& wt, int capacity) {
+        int n = val.size();
+        vector<tuple<double,int,int>> v; 
+        
+        for (int i = 0; i < n; i++) {
+            double ratio = (double)val[i] / wt[i];
+            v.push_back(make_tuple(ratio, val[i], wt[i]));
+        }
+        
+        sort(v.begin(), v.end(), cmp);
+        
+        double total_value = 0.0;
+        
+        for (int i = 0; i < n && capacity > 0; i++) {
+            int weight = get<2>(v[i]);
+            int value  = get<1>(v[i]);
+            
+            if (weight <= capacity) {
+                total_value += value;
+                capacity -= weight;
+            } else {
+                total_value += get<0>(v[i]) * capacity;
+                capacity = 0;
+            }
+        }
+        
+        return total_value;
+    }
+};
