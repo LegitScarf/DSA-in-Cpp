@@ -1,0 +1,39 @@
+class Solution {
+  public:
+    static bool cmp(tuple<int,int,int>a, tuple<int,int,int>b){
+        return get<0>(a) > get<0>(b);
+    }
+    vector<int> jobSequencing(vector<int> &deadline, vector<int> &profit) {
+        int n = profit.size();
+        vector<tuple<int,int,int>> v;
+        
+        for(int i=0; i<n; i++){
+            tuple<int,int,int> temp = make_tuple(profit[i],i,deadline[i]);
+            v.push_back(temp);
+        }
+        
+        sort(v.begin(),v.end(),cmp);
+        
+        int max_deadline = *max_element(deadline.begin(), deadline.end());
+        vector<int> sequence(max_deadline+1,-1);
+        int count = 0;
+        int total_profit = 0;
+        
+        for(int i=0; i<n; i++){
+            for(int j=get<2>(v[i]); j>0; j--){
+                if(sequence[j] == -1){
+                    sequence[j] = 1;
+                    total_profit += get<0>(v[i]);
+                    count++;
+                    break;
+                }
+            }
+        }
+        
+        vector<int> ans;
+        ans.push_back(count);
+        ans.push_back(total_profit);
+        
+        return ans;
+    }
+};
